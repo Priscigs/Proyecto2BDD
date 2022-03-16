@@ -33,7 +33,7 @@ CREATE TABLE
 			   presupuesto FLOAT,
 			   c_empleados INT,
 			   PRIMARY KEY (nombre))
-			   
+		   
 CREATE TABLE 
 	anuncios(titulo VARCHAR(100),
 			 duracion INT,
@@ -41,7 +41,8 @@ CREATE TABLE
 			 clasificacion VARCHAR(50),
 			 sponsor VARCHAR(50),
 			 id_Anuncios VARCHAR(10),
-			 PRIMARY KEY (id_Anuncios))
+			 PRIMARY KEY (id_Anuncios),
+			 FOREIGN KEY (sponsor) REFERENCES sponsor(id_sponsor))
 		
 CREATE TABLE 
 	perfiles(favoritos VARCHAR (50),
@@ -49,12 +50,12 @@ CREATE TABLE
 	 		 tipo_perfil VARCHAR (50),
 	 		 usuario VARCHAR (50),
 			 PRIMARY KEY (nombre_perfil))
-			 
+		 
 CREATE TABLE 
 	usuarios(usuario VARCHAR (50),
 	 		 password VARCHAR (50),
 	 		 tipo_suscripcion VARCHAR (50),
-	 		 activo_desde VARCHAR (50))
+	 		 activo_desde DATE)
 	
 CREATE TABLE 
 	sponsor(nombre VARCHAR(50),
@@ -82,7 +83,7 @@ CREATE TABLE
 				   	    FOREIGN KEY(id_pelicula) REFERENCES peliculas(id_pelicula),
 				   	    FOREIGN KEY(nombre) REFERENCES productora(nombre),
 				   	    PRIMARY KEY (id_pelicula, nombre))
-						
+				
 CREATE TABLE 
 	reproduccion(id_Anuncios VARCHAR (10),
 				 nombre_perfil VARCHAR(50),
@@ -91,3 +92,27 @@ CREATE TABLE
 				 FOREIGN KEY (nombre_perfil) REFERENCES perfiles(nombre_perfil),
 				 FOREIGN KEY (id_pelicula) REFERENCES peliculas(id_pelicula),
 				 PRIMARY KEY (id_Anuncios, nombre_perfil, id_pelicula))
+				 
+INSERT INTO peliculas(duracion, id_pelicula, titulo, fecha_lanzamiento, genero, premios_ganados)
+VALUES		(176, 'Q2ZLKBAJP0', 'The Batman', '2022/03/04', 'accion', '0')
+
+INSERT INTO actores(nombre, edad, fecha_nac, pais_origen, nominaciones, premios, id_actores)
+VALUES		('Robert Pattinson', 35, '1986/05/13', 'Inglaterra', '3', '0', '09JTUOY1OT')
+
+INSERT INTO director(nombre, edad, fecha_nac, pais_origen, nominaciones, premios, id_director)
+VALUES 		('Matt Reeves', '55', '1996/04/27', 'Estados Unidos', '2', '1', 'L7W6BN6UQY')
+
+INSERT INTO productora(nombre, pais, presupuesto, c_empleados)
+VALUES		('Warner Bros', 'Estados Unidos', 250000000, 250)
+
+INSERT INTO sponsor(nombre, tipo_contrato, id_sponsor)
+VALUES 		('Colgate','anual','WHZMLX829S')
+
+INSERT INTO anuncios(titulo, duracion, categoria, clasificacion, sponsor, id_Anuncios)
+VALUES 		('Lava tus dientes', '30', 'higiene', 'C', 'WHZMLX829S', 'Q6XY9R0LKB')
+
+INSERT INTO perfiles(favoritos, nombre_perfil, tipo_perfil, usuario)
+VALUES 		('The Batman', 'Elean', 'Adulto', 'premium')
+
+INSERT INTO usuarios(usuario, password, tipo_suscripcion, activo_desde)
+VALUES		('elean07', 'elean1234', 'premiun', '03/16/2022')
