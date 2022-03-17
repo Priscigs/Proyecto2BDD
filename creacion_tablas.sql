@@ -138,6 +138,8 @@ VALUES		('elean07', 'elean1234', 'premiun', '03/16/2022')
 
 INSERT INTO pelicula_actor(id_pelicula, id_actores)
 VALUES		('Q2ZLKBAJP0', '09JTUOY1OT')
+INSERT INTO pelicula_actor(id_pelicula, id_actores)
+VALUES		('APPC1TUD6A', '09JTUOY1OT')
 
 INSERT INTO pelicula_director(id_pelicula, id_director)
 VALUES		('Q2ZLKBAJP0', 'L7W6BN6UQY')
