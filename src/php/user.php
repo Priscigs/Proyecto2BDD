@@ -11,13 +11,13 @@ class ValidadorRegistro{
     private $errorPassword1; 
     private $errorPassword2;
 
-    public function __construct($usuario, $email, $password1, $password2, $conexion){
+    public function __construct($user, $correos, $password1, $password2, $conexion){
         $this->user="";
         $this->email="";
         $this->pass;
         
-        $this->errorUsuario = $this->validarNombre($usuario, $conexion); 
-        $this->errorEmail = $this->validarEmail($email, $conexion);
+        $this->errorUsuario = $this->validarNombre($user, $conexion); 
+        $this->errorEmail = $this->validarEmail($correos, $conexion);
         $this->errorPassword1 = $this->validarPassword1($password1);
         $this->errorPassword2 = $this->validarPassword2($password1, $password2);
 
@@ -55,15 +55,15 @@ class ValidadorRegistro{
         return ""; 
     }
 
-    private function validarEmail($email, $conexion){
+    private function validarEmail($correos, $conexion){
 
-        if (!$this->variableIniciada($email)) {
+        if (!$this->variableIniciada($correos)) {
             return "Ingrese su correo por favor";
         }
         else{
-            $this->email=$email;
+            $this->correos=$correos;
         }
-        if (users::correoExiste($conexion, $email)) {
+        if (users::correoExiste($conexion, $correos)) {
             return "El correo ya se encuentra en uso";
         }
         return "";
@@ -101,7 +101,7 @@ class ValidadorRegistro{
         return $this->user;
     }
     public function obtenerEmai1(){
-        return $this->email;
+        return $this->correos;
     }
     public function obtenerPassword(){
         return $this->pass;

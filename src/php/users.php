@@ -6,7 +6,7 @@ class users {
 
     if (isset($conexion)){
             try{
-                $sql = "INSERT INTO usuarios (usuario, password, tipo_subscripcion, activo_desde, correo) 
+                $sql = "INSERT INTO usuarios (usuario, password, tipo_suscripcion, activo_desde, correo) 
                 values (:user,
                         :pass, 
                         :tipo, 
@@ -20,11 +20,11 @@ class users {
                 $activo = $usuarios->obtenerA();
                 $correos  = $usuarios->obtenerCorreo();
                 
-                $sentencia->bindParm(':user', $user, PDO::PARAM_STR);
-                $sentencia->bindParm(':pass', $pass, PDO::PARAM_STR);
-                $sentencia->bindParm(':tipo', $tipo, PDO::PARAM_STR);
-                $sentencia->bindParm(':activo', $activo, PDO::PARAM_STR);
-                $sentencia->bindParm(':correos', $correos , PDO::PARAM_STR);
+                $sentencia->bindParam(':user', $user, PDO::PARAM_STR);
+                $sentencia->bindParam(':pass', $pass, PDO::PARAM_STR);
+                $sentencia->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+                $sentencia->bindParam(':activo', $activo, PDO::PARAM_STR);
+                $sentencia->bindParam(':correos', $correos , PDO::PARAM_STR);
 
                 // Devolver si es falso o verdadero dependiendo su ejecución
                 $usuarioInsertado = $sentencia->execute(); 
