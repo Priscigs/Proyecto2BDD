@@ -12,10 +12,25 @@ from PyQt5.QtCore import Qt, QUrl, QEvent
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWebEngineWidgets import QWebEngineSettings, QWebEngineView
 
-class YoutubePlayer(QWidget):
+url = ' '
+
+class YoutubePlayer(QWidget, url):
     def __init__(self, video_id, parent = None):
         super().__init__()
         self.parent = parent
+        self.video_id = video_id
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
+        
+        topLayout = QVBoxLayout()
+        self.layout.addLayout(topLayout)
+        self.aWebView(url)
+        
+    def aWebView(self, video_id):
+        self.WebView = QWebEngineView()
+        self.WebView.setUrl(QUrl('https://www.youtube.com/embed/{self.video_id?}rel=0'))
+        self.layout.addWidget(self.WebView)
+        
         
 
 
@@ -27,10 +42,12 @@ class PlayerWindow(QWidget):
         self.setMiniumSize(1200, 800)
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
+        self.player = YoutubePlayer(' ', parent = self)
         
         
         
-if __name__ == 'player':
+        
+if __name__ == 'main':
     app = QApplication(sys.argv)
     
     window = PlayerWindow()
