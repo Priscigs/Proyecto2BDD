@@ -7,41 +7,44 @@
 
 -- CREACIÓN DE TABLAS EN POSTGRESQL
 
+--DDL
 CREATE TABLE 
 	peliculas(duracion INT,
 			  id_pelicula VARCHAR(10),
 			  titulo VARCHAR(100),
 			  fecha_lanzamiento DATE,
 			  genero VARCHAR(50),
-			  premios_ganados INT,
-			  PRIMARY KEY (id_pelicula))
+			  clasificacion VARCHAR(5),
+			  PRIMARY KEY (id_pelicula));
 		
 CREATE TABLE 
 	actores(nombre VARCHAR(50),
 			edad INT,
 			fecha_nac DATE,
-			pais_origen VARCHAR(100),
-			nominaciones INT,
-			premios INT, 
-			id_actores VARCHAR(10),
-			PRIMARY KEY (id_actores))
+			pais_origen VARCHAR(100), 
+			id_actor VARCHAR(10),
+			PRIMARY KEY (id_actor));
 
 CREATE TABLE 
 	director(nombre VARCHAR(50),
 			 edad INT,
 			 fecha_nac DATE,
 			 pais_origen VARCHAR(100),
-			 nominaciones INT,
-			 premios INT,
 			 id_director VARCHAR(10),
-			 PRIMARY KEY(id_director))
+			 PRIMARY KEY(id_director));
 			 
 CREATE TABLE 
 	productora(nombre VARCHAR(50),
 			   pais VARCHAR(100),
 			   presupuesto FLOAT,
 			   c_empleados INT,
-			   PRIMARY KEY (nombre))
+			   PRIMARY KEY (nombre));
+
+CREATE TABLE 
+	sponsor(nombre VARCHAR(50),
+		    tipo_contrato VARCHAR (50),
+		    id_sponsor VARCHAR (10),
+		    PRIMARY KEY (id_sponsor));
 		   
 CREATE TABLE 
 	anuncios(titulo VARCHAR(100),
@@ -51,57 +54,97 @@ CREATE TABLE
 			 sponsor VARCHAR(50),
 			 id_Anuncios VARCHAR(10),
 			 PRIMARY KEY (id_Anuncios),
-			 FOREIGN KEY (sponsor) REFERENCES sponsor(id_sponsor))
-		
-CREATE TABLE 
-	perfiles(favoritos VARCHAR (50),
-	 		 nombre_perfil VARCHAR(50),
-	 		 tipo_perfil VARCHAR (50),
-	 		 usuario VARCHAR (50),
-			 PRIMARY KEY (nombre_perfil))
-		 
-CREATE TABLE 
-	usuarios(usuario VARCHAR (50),
-	 		 password VARCHAR (50),
-	 		 tipo_suscripcion VARCHAR (50),
-	 		 activo_desde DATE)
-	
-CREATE TABLE 
-	sponsor(nombre VARCHAR(50),
-		    tipo_contrato VARCHAR (50),
-		    id_sponsor VARCHAR (10),
-		    PRIMARY KEY (id_sponsor))
+			 FOREIGN KEY (sponsor) REFERENCES sponsor(id_sponsor));
 
 CREATE TABLE 
-	pelicula_actor(id_pelicula VARCHAR(100),
-				   id_actores VARCHAR(50),
+	usuarios(usuario VARCHAR (20),
+	 		 password VARCHAR (25),
+			 email VARCHAR(30),
+	 		 tipo_suscripcion VARCHAR (15),
+	 		 activo_desde DATE,
+			  PRIMARY KEY(usuario));
+
+CREATE TABLE 
+	perfiles(id_perfil VARCHAR (10),
+	 		 nombre_perfil VARCHAR(20),
+	 		 tipo_perfil VARCHAR (10),
+	 		 usuario VARCHAR (20),
+			 PRIMARY KEY (id_perfil),
+			 FOREIGN KEY(usuario) REFERENCES usuarios(usuario));
+
+CREATE TABLE favoritos(id_perfil VARCHAR(50),
+					  fecha_add DATE,
+					  id_pelicula VARCHAR(10),
+					  PRIMARY KEY(id_perfil, fecha_add, id_pelicula),
+					  FOREIGN KEY(id_pelicula) REFERENCES peliculas(id_pelicula),
+				   	  FOREIGN KEY(id_perfil) REFERENCES perfiles(id_perfil));
+	
+
+CREATE TABLE premios(
+	id_premio VARCHAR(10),
+	nominacion VARCHAR(10),
+	ceremonia VARCHAR(15),
+	anio VARCHAR(4),
+	categoria VARCHAR(15),
+	PRIMARY KEY(id_premio)
+);
+
+--Relaciones--	 
+
+
+CREATE TABLE 
+	pelicula_actor(id_pelicula VARCHAR(10),
+				   id_actor VARCHAR(10),
 				   FOREIGN KEY(id_pelicula) REFERENCES peliculas(id_pelicula),
-				   FOREIGN KEY(id_actores) REFERENCES actores(id_actores),
-				   PRIMARY KEY (id_pelicula, id_actores))
+				   FOREIGN KEY(id_actor) REFERENCES actores(id_actor),
+				   PRIMARY KEY (id_pelicula, id_actor));
 				   
 CREATE TABLE 
 	pelicula_director(id_pelicula VARCHAR(10),
 				   	  id_director VARCHAR(10),
 				   	  FOREIGN KEY(id_pelicula) REFERENCES peliculas(id_pelicula),
 				   	  FOREIGN KEY(id_director) REFERENCES director(id_director),
-				   	  PRIMARY KEY (id_pelicula, id_director))
+				   	  PRIMARY KEY (id_pelicula, id_director));
 					  
 CREATE TABLE 
 	productora_pelicula(id_pelicula VARCHAR(10),
-				   	    nombre VARCHAR(50),
+				   	    nombre VARCHAR(10),
 				   	    FOREIGN KEY(id_pelicula) REFERENCES peliculas(id_pelicula),
 				   	    FOREIGN KEY(nombre) REFERENCES productora(nombre),
-				   	    PRIMARY KEY (id_pelicula, nombre))
+				   	    PRIMARY KEY (id_pelicula, nombre));
 				
 CREATE TABLE 
 	reproduccion(id_Anuncios VARCHAR (10),
-				 nombre_perfil VARCHAR(50),
+				 id_perfil VARCHAR(10),
 				 id_pelicula VARCHAR(10),
+				 fecha_reprod DATE,
 				 FOREIGN KEY (id_Anuncios) REFERENCES anuncios(id_Anuncios),
-				 FOREIGN KEY (nombre_perfil) REFERENCES perfiles(nombre_perfil),
+				 FOREIGN KEY (id_perfil) REFERENCES perfiles(id_perfil),
 				 FOREIGN KEY (id_pelicula) REFERENCES peliculas(id_pelicula),
-				 PRIMARY KEY (id_Anuncios, nombre_perfil, id_pelicula))
-				 
+				 PRIMARY KEY (id_Anuncios, id_perfil, id_pelicula));
+
+CREATE TABLE director_premio(id_premio VARCHAR(10),
+							id_director VARCHAR(10),
+							FOREIGN KEY(id_premio) REFERENCES premios(id_premio),
+							FOREIGN KEY(id_director) REFERENCES director(id_director),
+							PRIMARY KEY(id_premio, id_director)
+							);
+
+CREATE TABLE actor_premio(id_premio VARCHAR(10),
+							id_actor VARCHAR(10),
+							FOREIGN KEY(id_premio) REFERENCES premios(id_premio),
+							FOREIGN KEY(id_actor) REFERENCES actores(id_actor),
+							PRIMARY KEY(id_premio, id_actor)
+							);
+
+CREATE TABLE pelicula_premio(id_premio VARCHAR(10),
+							id_pelicula VARCHAR(10),
+							FOREIGN KEY(id_premio) REFERENCES premios(id_premio),
+							FOREIGN KEY(id_pelicula) REFERENCES peliculas(id_pelicula),
+							PRIMARY KEY(id_premio, id_pelicula)
+							);
+
+
 -- INSERCIÓN DE DATOS A LAS TABLAS 
 				 
 INSERT INTO peliculas(duracion, id_pelicula, titulo, fecha_lanzamiento, genero, premios_ganados)
