@@ -5,7 +5,7 @@ from PIL import Image,ImageTk
 import tkinter as tk
 from sympy import root
 import psycopg2
-import hashlib
+from hashlib import sha256
 
 class Register:
     def __init__(self,root):
@@ -24,26 +24,24 @@ class Register:
         email =Label(text ="Email:",font=("times new roman",15,"bold"),fg="gray").place(x=20,y=260)
         txt_email =Entry(font=("times new roman",15),textvariable=self.var_email).place(x=20,y=290)
 
+        self.contraHash = StringVar()
 
-        self.var_contra = StringVar()
+        self.var_contra = StringVar(value='')
         contraseña =Label(text ="Contraseña:",font=("times new roman",15,"bold"),fg="gray").place(x=20,y=320)
-        txt_contraseña =Entry(font=("times new roman",15),textvariable=self.var_contra)
-        txt_contraseña.place(x=20,y=350)
-        txt_contraseña.configure(show="*")
-        # self.pruebaa = self.var_contra.get().encode()
-        # self.hs = hashlib.md5(self.pruebaa)
-        # self.var_contra = self.hs.hexdigest()
+        self.txt_contraseña =Entry(font=("times new roman",15),textvariable=self.var_contra)
+        self.txt_contraseña.place(x=20,y=350)
+        self.txt_contraseña.configure(show="*")
 
-        #t_hashed = hashlib.sha3_512(self.var_contra).hexdigest()
+        # ALMACENAMIENTO DE HASH CON SHA256
+        h = sha256()
+        h.update(self.txt_contraseña.get().encode())
+        self.contraHash.set(h.hexdigest())
 
         self.var_confContra = StringVar()
         conf_contraseña =Label(text ="Confirmar contraseña:",font=("times new roman",15,"bold"),fg="gray").place(x=20,y=380)
         txt_confcontraseña =Entry(font=("times new roman",15),textvariable=self.var_confContra)
         txt_confcontraseña.place(x=20,y=410)
         txt_confcontraseña.configure(show="*")
-        # self.pruebaa2 = self.var_confContra.get().encode()
-        # self.hs2 = hashlib.md5(self.pruebaa2)
-        # self.var_confContra = self.hs2.hexdigest()
 
         btn_login =Button(self.root, text= 'Select Profile Type',command= self.register_ventana,activebackground='green', bg='#2A2A46', cursor="hand2",font=('Times new roman', 12,'bold'),fg="black").place(x=100,y=500,width=220, height=30)
 
@@ -98,7 +96,7 @@ class Register:
             self.label1.configure(text="Estándar")
         if self.v.get()==3:
             self.label1.configure(text="Premium")
-    
+    var_userType = mostrarSeleccionado
     def register_ventana (self):
         self.root.destroy()
         import login
@@ -111,7 +109,7 @@ class Register:
             sus= "Null"
             activ = "Null"
             datos = [(self.var_fnames.get(),
-                    self.var_contra.get(),
+                    self.contraHash.get(),
                     self.var_userType.get(),
                     self.var_email.get(),
                     activ)]
@@ -127,8 +125,6 @@ class Register:
         else:
             messagebox.showerror("Error","Las contraseñas no coinciden",parent=self.root)
              
-
-
 root=Tk()
 obj = Register(root)
 root.mainloop()
