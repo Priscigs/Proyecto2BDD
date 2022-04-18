@@ -27,11 +27,23 @@ class Login:
         txt_contraseña.configure(show="*")
         
         btn_register =Button(self.root, text= '¿Registrar nueva cuenta?',command= self.register_ventana,font=('Times new roman', 10),bd=0,bg="white",fg="black").place(x=100,y=390)
-        btn_register =Button(self.root, text= 'Login',command= self.verificar_data,activebackground='green', bg='#2A2A46', cursor="hand2",font=('Times new roman', 12,'bold'),fg="white").place(x=200,y=460,width=110, height=30)
+        btn_register =Button(self.root, text= 'Login',command= self.verificar_data,activebackground='green', bg='#2A2A46', cursor="hand2",font=('Times new roman', 12,'bold'),fg="white").place(x=145,y=440,width=110, height=30)
+        btn_register =Button(self.root, text= 'Añadir Perfiles',command= self.perfiles,activebackground='green', bg='#2A2A46', cursor="hand2",font=('Times new roman', 12,'bold'),fg="white").place(x=145,y=470,width=110, height=30)
 
+        # cont = 1
+        # while cont <= 3:
+        #     if self.var_email
     def register_ventana (self):
         self.root.destroy()
         import register
+
+    def movies (self):
+        self.root.destroy()
+        import movies
+
+    def perfiles (self):
+        self.root.destroy()
+        import profiles
 
     def verificar_data(self):
         if self.var_email.get() =="" or self.var_contra.get()=="" :
@@ -41,17 +53,19 @@ class Login:
             try:
                 datos = [self.var_email.get(),self.var_contra.get()]
                 self.tuplas = tuple(datos)
-                self.connection = psycopg2.connect(dbname ="proyecto02-BBD", user = "postgres", password ="3369")
+                self.connection = psycopg2.connect(dbname ="BDDP2", user = "postgres", password ="klipxtreme123_")
                 self.cursor = self.connection.cursor()
-                self.cursor.execute("SELECT* FROM usuarios WHERE correo=%s and password =%s",self.tuplas)
+                self.cursor.execute("SELECT* FROM usuarios WHERE email=%s and password =%s",self.tuplas)
                 
                 row =self.cursor.fetchone()
                 if row ==None:
                     messagebox.showerror("Error","Correo o contraseña incorrectos",parent=self.root)
                 else:
                     messagebox.showinfo("Sucess","Se inicio sesion",parent=self.root)
+                    self.movies
                     self.connection.commit ()
                     self.connection.close()
+                    
             except Exception as es:
                  messagebox.showerror("Error","Error Due to: {str (es)}",parent=self.root)
 

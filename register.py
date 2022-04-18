@@ -6,6 +6,8 @@ import tkinter as tk
 from sympy import root
 import psycopg2
 from hashlib import sha256
+from collections import Counter
+import datetime
 
 class Register:
     def __init__(self,root):
@@ -53,33 +55,30 @@ class Register:
               justify= tk.LEFT, 
               padx= 20).place(x=200,y=200)
 
-        self.freemium = tk.Radiobutton(root, 
-                              text="Cuenta freemium",
-                              command=self.mostrarSeleccionado,
-                              padx = 20, 
-                              variable=self.v, 
-                              value=1).place(x=215,y=240)
+        self.freemium = tk.Label(root, 
+                              text="Freemium",
+                              ).place(x=215,y=240)
 
-        self.standar = tk.Radiobutton(root, 
-                              text="Cuenta estándar",
-                              command=self.mostrarSeleccionado,
-                              padx = 20, 
-                              variable=self.v, 
-                              value=2).place(x=215,y=270)
+        self.standar = tk.Label(root, 
+                              text="Estándar",
+                             ).place(x=215,y=270)
 
-        self.premium = tk.Radiobutton(root, 
-                              text="Cuenta premium",
-                              command=self.mostrarSeleccionado,
-                              padx = 20, 
-                              variable=self.v, 
-                              value=3).place(x=215,y=300)
+        self.premium = tk.Label(root, 
+                              text="Premium").place(x=215,y=300)
+                            #   command=self.mostrarSeleccionado,
+                            #   padx = 20, 
+                            #   variable=self.v, 
+                            #   value=3
 
-        self.var_userType = StringVar()
-        self.label1 = tk.Label(text ="",
-                                    fg="white", 
-                                    justify= tk.LEFT, 
-                                    padx= 20)
-        self.label1.place(x=215,y=330)
+        self.var_type = StringVar()
+        txt_type =Entry(font=("times new roman",15),textvariable=self.var_type).place(x=215,y=340)
+
+        # self.var_userType = StringVar()
+        # self.label1 = tk.Label(text ="",
+        #                             fg="white", 
+        #                             justify= tk.LEFT, 
+        #                             padx= 20)
+        # self.label1.place(x=215,y=330)
 
         btn_register = Button(self.root, 
                               text= 'Crear Cuenta',
@@ -89,35 +88,35 @@ class Register:
                               font=('Times new roman', 12,'bold'),
                               fg="black").place(x=150,y=460,width=100, height=30)
 
-    def mostrarSeleccionado(self):
-        if self.v.get()==1:
-            self.label1.configure(text="Freemium")
-        if self.v.get()==2:
-            self.label1.configure(text="Estándar")
-        if self.v.get()==3:
-            self.label1.configure(text="Premium")
-    var_userType = mostrarSeleccionado
+    # def mostrarSeleccionado(self):
+    #     if self.v.get()==1:
+    #         self.label1.configure(text="Freemium")
+    #     if self.v.get()==2:
+    #         self.label1.configure(text="Estándar")
+    #     if self.v.get()==3:
+    #         self.label1.configure(text="Premium")
+    # var_userType = mostrarSeleccionado
     def register_ventana (self):
         self.root.destroy()
         import login
     
     def register_data(self):
-        if self.var_fnames.get() =="" or self.var_email.get()=="" or self.var_contra.get()=="" or self.var_confContra.get() =="":
+        activ = datetime.date.today()
+        self.datos = [(self.var_fnames.get(),
+                    self.var_contra.get(),
+                    self.var_email.get(),
+                    self.var_type.get(),
+                    activ)]
+        self.tuplaa = tuple(self.datos)
+        if self.var_fnames.get() =="" or self.var_email.get()=="" or self.var_contra.get()=="" or self.var_confContra.get() =="" or self.var_type.get() =="":
             messagebox.showerror("Error","Campos vacios",parent=self.root)
 
         elif self.var_contra.get()==self.var_confContra.get():
-            sus= "Null"
-            activ = "Null"
-            datos = [(self.var_fnames.get(),
-                    self.contraHash.get(),
-                    self.var_userType.get(),
-                    self.var_email.get(),
-                    activ)]
-            self.tuplaa = tuple(datos)
-            self.connection = psycopg2.connect(dbname ="P2BDD", user = "postgres", password ="klipxtreme123_")
+                
+            self.connection = psycopg2.connect(dbname ="BDDP2", user = "postgres", password ="klipxtreme123_")
             self.cursor = self.connection.cursor()
-            self.cursor.executemany("insert into usuarios(usuario,password,tipo_suscripcion,correo,activo_desde) values(%s,	%s,	%s,	%s,	%s)",self.tuplaa)
-                    
+            self.cursor.executemany("insert into usuarios(usuario,password,email,tipo_suscripcion,activo_desde) values(%s,	%s,	%s,	%s,	%s)",self.tuplaa)
+                        
             self.connection.commit ()
             self.connection.close()
 
