@@ -33,11 +33,11 @@ class Agregar:
         txt_fechaL =Entry(font=("times new roman",15),textvariable=self.var_fechaL).place(x=100,y=290)
 
         self.var_genero= StringVar()
-        fechaL =Label(text ="Genero de la pelicula:",font=("times new roman",15,"bold"),fg="gray").place(x=100,y=320)
-        txt_fechaL =Entry(font=("times new roman",15),textvariable=self.var_genero).place(x=100,y=350)
+        fechaL =Label(text ="Clasificacion:",font=("times new roman",15,"bold"),fg="gray").place(x=100,y=320)
+        txt_clasi =Entry(font=("times new roman",15),textvariable=self.var_genero).place(x=100,y=350)
 
         self.var_premios= StringVar()
-        premios =Label(text ="Premios que gano la pelicula:",font=("times new roman",15,"bold"),fg="gray").place(x=100,y=380)
+        premios =Label(text ="Director de la pelicula:",font=("times new roman",15,"bold"),fg="gray").place(x=100,y=380)
         txt_premios =Entry(font=("times new roman",15),textvariable=self.var_premios).place(x=100,y=410)
 
         btn_register =Button(self.root, text= 'AGREGAR PELICULA',command= self.register_data,activebackground='green',bg='#2A2A46',font=('Times new roman', 10),bd=0,fg="white").place(x=200,y=460)
@@ -55,9 +55,9 @@ class Agregar:
                     self.var_idpelicula.get(),
                     self.var_tituloPeli.get(),self.var_genero.get(), self.var_premios.get(),  self.var_fechaL.get())]
             self.tuplaa = tuple(datos)
-            self.connection = psycopg2.connect(dbname ="proyecto02-BBD", user = "postgres", password ="3369")
+            self.connection = psycopg2.connect(dbname ="Proyecto2", user = "postgres", password ="3369")
             self.cursor = self.connection.cursor()
-            self.cursor.executemany("insert into peliculas(duracion,id_pelicula,titulo,genero,premios_ganados,fecha_lanzamiento) values(%s,	%s,	%s,	%s,	%s,	%s)",self.tuplaa)
+            self.cursor.executemany("insert into peliculas(duracion,id_pelicula,titulo,clasificacion,director,fecha_lanzamiento) values(%s,%s,	%s,	%s,	%s,	%s)",self.tuplaa)
                     
             self.connection.commit ()
             self.connection.close()
