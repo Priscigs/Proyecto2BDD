@@ -8,15 +8,15 @@ Created on Sun Apr 17 15:15:33 2022
 
 import psycopg2
 
-elementSearch = "Jujutsu Kaisen 0"
+#elementSearch = "Jujutsu Kaisen 0"
 
 def searchByMovie(elementSearch):
     try:
         connection = psycopg2.connect(user="postgres",
-                                      password="FlygonXD12",
+                                      password="klipxtreme123_",
                                       host="127.0.0.1",
                                       port="5432",
-                                      database="proyecto2_1")
+                                      database="BDDP2")
         cursor = connection.cursor()
         postgreSQL_select_Query = "select * from peliculas WHERE titulo like " + "\'" + elementSearch + "\'" 
 
@@ -49,10 +49,10 @@ def searchByMovie(elementSearch):
 def searchByActor(elementSearch):
     try:
         connection = psycopg2.connect(user="postgres",
-                                      password="FlygonXD12",
+                                      password="klipxtreme123_",
                                       host="127.0.0.1",
                                       port="5432",
-                                      database="proyecto2_1")
+                                      database="BDDP2")
         cursor = connection.cursor()
         postgreSQL_select_Query = "SELECT nombre, id_actor FROM actores WHERE nombre = "+"\'"+ elementSearch +"\'";
         
@@ -92,10 +92,10 @@ def searchByActor(elementSearch):
 def searchByGenre(elementSearch):
     try:
         connection = psycopg2.connect(user="postgres",
-                                      password="FlygonXD12",
+                                      password="klipxtreme123_",
                                       host="127.0.0.1",
                                       port="5432",
-                                      database="proyecto2_1")
+                                      database="BDDP2")
         cursor = connection.cursor()
         postgreSQL_select_Query = "SELECT peliculas.titulo, peliculas.id_pelicula, generos_peliculas.genero FROM peliculas, generos_peliculas WHERE peliculas.id_pelicula=generos_peliculas.id_pelicula AND generos_peliculas.genero=" + "\'" + elementSearch + "\'" 
 
@@ -124,10 +124,10 @@ def searchByGenre(elementSearch):
 def searchByDirector(elementSearch):
     try:
         connection = psycopg2.connect(user="postgres",
-                                      password="FlygonXD12",
+                                      password="klipxtreme123_",
                                       host="127.0.0.1",
                                       port="5432",
-                                      database="proyecto2_1")
+                                      database="BDDP2")
         cursor = connection.cursor()
         postgreSQL_select_Query = "select * from peliculas WHERE director like " + "\'" + elementSearch + "\'" 
 
@@ -155,6 +155,3 @@ def searchByDirector(elementSearch):
             cursor.close()
             connection.close()
             print("PostgreSQL connection is closed")
-
-            
-searchByMovie("Jujutsu Kaisen 0")
