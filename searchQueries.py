@@ -96,7 +96,7 @@ def searchByGenre(elementSearch):
                                       port="5432",
                                       database="proyecto2_1")
         cursor = connection.cursor()
-        postgreSQL_select_Query = "select * from peliculas WHERE titulo like " + "\'" + elementSearch + "\'" 
+        postgreSQL_select_Query = "SELECT peliculas.titulo, peliculas.id_pelicula, generos_peliculas.genero FROM peliculas, generos_peliculas WHERE peliculas.id_pelicula=generos_peliculas.id_pelicula AND generos_peliculas.genero=" + "\'" + elementSearch + "\'" 
 
         cursor.execute(postgreSQL_select_Query)
         print("Selecting rows from mobile table using cursor.fetchall")
@@ -107,11 +107,8 @@ def searchByGenre(elementSearch):
 
         print("Print each row and it's columns values")
         for row in query:
-            print(" ", row[2], )
-            print("Duracion: ", row[0])
-            print("Fecha de estreno: ", row[3])
-            print("Director: ", row[5])
-            print("Clasificación: ", row[4], "\n")
+            print(" ", row[0], )
+            print("Género: ", row[2])
 
     except (Exception, psycopg2.Error) as error:
         print("Error while fetching data from PostgreSQL", error)
@@ -159,4 +156,4 @@ def searchByDirector(elementSearch):
             print("PostgreSQL connection is closed")
 
             
-searchByMovie(elementSearch)
+searchByGenre("accion")
