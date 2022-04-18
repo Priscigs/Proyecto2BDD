@@ -14,7 +14,7 @@ class Eliminar:
 	
         titulo =Label(text ="Eliminar pelicula:",font=("times new roman",20,"bold"),fg="Black").place(x=70,y=40)
 
-        self.left=ImageTk.PhotoImage(file = "fotos/basura.png")
+        self.left=ImageTk.PhotoImage(file = "Proyecto2BDD/fotos/basura.png")
         left= Label(self.root,image =self.left).place(x=285,y=10,width=128,height=128)
 
     
@@ -33,31 +33,26 @@ class Eliminar:
              
 
     def regresar_ventana (self):
-        self.root.destroy()
         import Bprinci
     
     def usuario (self):
-        self.root.destroy()
         import Bprinci
 
     def verificar_data(self):
         if self.var_idPelilcula.get() =="" or self.var_nombre.get()=="" :
             messagebox.showerror("Error","Campos vacios",parent=self.root)
-        else: 
-            
+        elif self.var_idPelilcula.get() !="" or self.var_nombre.get() !="" :
                 datos = [self.var_idPelilcula.get(),self.var_nombre.get()]
                 self.tuplas = tuple(datos)
-                self.connection = psycopg2.connect(dbname ="proyecto02-BBD", user = "postgres", password ="3369")
+                self.connection = psycopg2.connect(dbname ="Proyecto2", user = "postgres", password ="3369")
                 self.cursor = self.connection.cursor()
                 self.cursor.execute("DELETE FROM peliculas WHERE id_pelicula=%s and titulo =%s",self.tuplas)
-                row =self.cursor.fetchone()
-                print (row)
-                if row == None:
-                    messagebox.showerror("Error","No es posible eliminar esa pelilcula",parent=self.root)
-                else:
-                    messagebox.showinfo("Sucess","Se inicio sesion",parent=self.root)
-                    self.connection.commit ()
-                    self.connection.close()
+                self.connection.commit ()
+                self.connection.close()       
+                messagebox.showinfo("Sucess","Se ha eliminado esta pelicula con exito",parent=self.root)
+        else:
+            messagebox.showinfo("Sucess","Se inicio sesion",parent=self.root)
+               
         
 root=Tk()
 obj = Eliminar(root)
