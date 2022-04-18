@@ -22,7 +22,9 @@ class Login:
 
         self.var_contra = StringVar()
         contraseña =Label(text ="Contraseña:",font=("times new roman",15,"bold"),fg="gray").place(x=100,y=320)
-        txt_contraseña =Entry(font=("times new roman",15),textvariable=self.var_contra).place(x=100,y=350)
+        txt_contraseña =Entry(font=("times new roman",15),textvariable=self.var_contra)
+        txt_contraseña.place(x=100,y=350)
+        txt_contraseña.configure(show="*")
         
         btn_register =Button(self.root, text= '¿Registrar nueva cuenta?',command= self.register_ventana,font=('Times new roman', 10),bd=0,bg="white",fg="black").place(x=100,y=390)
         btn_register =Button(self.root, text= 'Login',command= self.verificar_data,activebackground='green', bg='#2A2A46', cursor="hand2",font=('Times new roman', 12,'bold'),fg="white").place(x=200,y=460,width=110, height=30)
@@ -52,12 +54,6 @@ class Login:
                     self.connection.close()
             except Exception as es:
                  messagebox.showerror("Error","Error Due to: {str (es)}",parent=self.root)
-
-
-
-            
-
-
 
 root=Tk()
 obj = Login(root)
