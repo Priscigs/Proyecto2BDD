@@ -15,7 +15,7 @@ class Modificar:
         titulo =Label(text ="Modificar una pelicula:",font=("times new roman",20,"bold"),fg="Black").place(x=90,y=5)
 
         self.var_fedit= StringVar()
-        edit =Label(text ="Nombre de la pelicula a modificar:",font=("times new roman",15,"bold"),fg="gray").place(x=100,y=50)
+        edit =Label(text ="ID de la pelicula a modificar:",font=("times new roman",15,"bold"),fg="gray").place(x=100,y=50)
         txt_fedit=Entry(font=("times new roman",15),textvariable=self.var_fedit).place(x=100,y=80)
 
         self.var_fduracion= StringVar()
@@ -24,7 +24,7 @@ class Modificar:
 
 
         self.var_idpelicula = StringVar()
-        pelicula =Label(text ="ID de la pelicula:",font=("times new roman",15,"bold"),fg="gray").place(x=100,y=180)
+        pelicula =Label(text ="nombre de la pelicula:",font=("times new roman",15,"bold"),fg="gray").place(x=100,y=180)
         txt_pelicula =Entry(font=("times new roman",15),textvariable=self.var_idpelicula).place(x=100,y=220)
 
         self.var_fechaL= StringVar()
@@ -56,7 +56,7 @@ class Modificar:
             self.tuplaa = tuple(datos)
             self.connection = psycopg2.connect(dbname ="Proyecto2", user = "postgres", password ="3369")
             self.cursor = self.connection.cursor()
-            self.cursor.executemany("UPDATE peliculas SET duracion= %s, id_pelicula = %s, director =%s, fecha_lanzamiento =%s ,clasificacion =%s WHERE titulo = %s", self.tuplaa)
+            self.cursor.executemany("UPDATE peliculas SET duracion= %s, titulo = %s, director =%s, fecha_lanzamiento =%s ,clasificacion =%s WHERE id_pelicula = %s", self.tuplaa)
                     
             self.connection.commit ()
             self.connection.close()
