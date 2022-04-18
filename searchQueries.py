@@ -24,6 +24,7 @@ def searchByMovie(elementSearch):
         print("Selecting rows from mobile table using cursor.fetchall")
         query = cursor.fetchall()
         
+        print(query)
         if(query == None):
             print("No se han encontrado coincidencias")
 
@@ -34,7 +35,7 @@ def searchByMovie(elementSearch):
             print("Fecha de estreno: ", row[3])
             print("Director: ", row[5])
             print("Clasificación: ", row[4], "\n")
-
+            
     except (Exception, psycopg2.Error) as error:
         print("Error while fetching data from PostgreSQL", error)
 
@@ -156,4 +157,4 @@ def searchByDirector(elementSearch):
             print("PostgreSQL connection is closed")
 
             
-searchByGenre("accion")
+searchByMovie("Jujutsu Kaisen 0")

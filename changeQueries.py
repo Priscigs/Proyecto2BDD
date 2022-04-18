@@ -15,7 +15,7 @@ def deleteData(elementSearch, titulo):
                                       port="5432",
                                       database="proyecto2_1")
         cursor = connection.cursor()
-        postgreSQL_select_Query = "Update peliculas set duracion = NULL, id_pelicula=NULL, titulo=NULL, fecha_lanzamiento=NULL, director=NULL, clasificacion=NULL where id_pelicula=" + "\'" + elementSearch + "\'" 
+        postgreSQL_select_Query = "Update peliculas set duracion = NULL, id_pelicula=NULL, titulo=NULL, fecha_lanzamiento=NULL, director=NULL, clasificacion=NULL where id_pelicula=" + "\'" + elementSearch + "\'" ;
 
         cursor.execute(postgreSQL_select_Query)
         print("Selecting rows from mobile table using cursor.fetchall")
@@ -44,7 +44,7 @@ def updateData(duracion, id_pelicula, titulo, fecha_lanzamiento, clasificacion, 
                                       port="5432",
                                       database="proyecto2_1")
         cursor = connection.cursor()
-        postgreSQL_select_Query = "Update peliculas set duracion =" + "\'" + duracion + "\'" +  ", titulo=" + "\'" + titulo + "\'" + ", fecha_lanzamiento=" + "\'" + fecha_lanzamiento + "\'" + ", director=" + "\'" + director + "\'" + ", clasificacion="+ "\'" + clasificacion + "\'" + " where id_pelicula=" + "\'" + id_pelicula + "\'" 
+        postgreSQL_select_Query = "Update peliculas set duracion =" + "\'" + duracion + "\'" +  ", titulo=" + "\'" + titulo + "\'" + ", fecha_lanzamiento=" + "\'" + fecha_lanzamiento + "\'" + ", director=" + "\'" + director + "\'" + ", clasificacion="+ "\'" + clasificacion + "\'" + " where id_pelicula=" + "\'" + id_pelicula + "\'" ;
 
         cursor.execute(postgreSQL_select_Query)
         print("Selecting rows from mobile table using cursor.fetchall")
@@ -73,7 +73,7 @@ def insertData(duracion, id_pelicula, titulo, fecha_lanzamiento, clasificacion, 
                                       port="5432",
                                       database="proyecto2_1")
         cursor = connection.cursor()
-        postgreSQL_select_Query = "INSERT INTO peliculas VALUES(" + duracion +  ","  + "\'" + id_pelicula + "\'" + ","  + "\'" + titulo + "\'" + ","  + "\'" + fecha_lanzamiento + "\'" + ","  + "\'" + clasificacion + "\'" + ","  + "\'" + director + "\'" +")" 
+        postgreSQL_select_Query = "INSERT INTO peliculas VALUES(" + duracion +  ","  + "\'" + id_pelicula + "\'" + ","  + "\'" + titulo + "\'" + ","  + "\'" + fecha_lanzamiento + "\'" + ","  + "\'" + clasificacion + "\'" + ","  + "\'" + director + "\'" +")" ;
 
         cursor.execute(postgreSQL_select_Query)
         print("Selecting rows from mobile table using cursor.fetchall")
