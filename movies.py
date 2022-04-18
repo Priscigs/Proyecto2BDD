@@ -4,6 +4,7 @@ from PIL import Image,ImageTk
 from sympy import root
 import pywhatkit as kit
 import webbrowser
+#import searchQueries as sQ
 
 class Movies:
 
@@ -57,7 +58,7 @@ class Movies:
         self.movie22 = ImageTk.PhotoImage(self.movie2)
         btn_movie2 = Button(self.root, 
                             image= self.movie22,
-                            command= self.movie1,
+                            command=lambda: self.movie1,
                             fg="black") 
         btn_movie2.place(
             x=150.0,

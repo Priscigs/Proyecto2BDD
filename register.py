@@ -98,12 +98,12 @@ class Register:
     # var_userType = mostrarSeleccionado
     def register_ventana (self):
         self.root.destroy()
-        import login
+        import profiles
     
     def register_data(self):
         activ = datetime.date.today()
         self.datos = [(self.var_fnames.get(),
-                    self.var_contra.get(),
+                    self.contraHash.get(),
                     self.var_email.get(),
                     self.var_type.get(),
                     activ)]
@@ -115,12 +115,12 @@ class Register:
                 
             self.connection = psycopg2.connect(dbname ="BDDP2", user = "postgres", password ="klipxtreme123_")
             self.cursor = self.connection.cursor()
-            self.cursor.executemany("insert into usuarios(usuario,password,email,tipo_suscripcion,activo_desde) values(%s,	%s,	%s,	%s,	%s)",self.tuplaa)
-                        
+            self.cursor.executemany("insert into usuarios(usuario,password,email,tipo_suscripcion,activo_desde) values(%s,	%s,	%s,	%s,	%s)",self.tuplaa)       
             self.connection.commit ()
             self.connection.close()
-
             messagebox.showinfo("Sucess","Cuenta creada",parent=self.root)
+            self.root.destroy()
+            import login
         else:
             messagebox.showerror("Error","Las contraseñas no coinciden",parent=self.root)
              

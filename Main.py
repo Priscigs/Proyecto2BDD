@@ -27,11 +27,6 @@ class Main:
         self.root.destroy()
         import login
     
-
-
-
-
-
 root=Tk()
 obj = Main(root)
 root.mainloop()
