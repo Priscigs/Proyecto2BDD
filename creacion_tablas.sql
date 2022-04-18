@@ -13,7 +13,7 @@ CREATE TABLE
 			  id_pelicula VARCHAR(10),
 			  titulo VARCHAR(100),
 			  fecha_lanzamiento DATE,
-			  genero VARCHAR(50),
+			  director VARCHAR(50),
 			  clasificacion VARCHAR(5),
 			  PRIMARY KEY (id_pelicula));
 		
@@ -89,6 +89,14 @@ CREATE TABLE premios(
 	PRIMARY KEY(id_premio)
 );
 
+CREATE TABLES generos(
+	genero VARCHAR(20),
+	descripcion VARCHAR(50),
+	PRIMARY KEY(genero)
+);
+
+ALTER TABLE peliculas
+ADD FOREIGN KEY(director) REFERENCES director(nombre)
 --Relaciones--	 
 
 
