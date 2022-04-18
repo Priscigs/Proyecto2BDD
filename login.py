@@ -4,7 +4,6 @@ from PIL import Image,ImageTk
 from sympy import root
 import psycopg2
 
-
 class Login:
     def __init__(self,root):
         self.root = root

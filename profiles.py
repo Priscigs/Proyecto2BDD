@@ -8,7 +8,7 @@ class Profiles:
     def __init__(self,root):
         self.root = root
         self.root.title ("Profiles")
-        self.root.geometry('400x550+600+70')
+        self.root.geometry('400x550+600+70') 
 	
         self.left=ImageTk.PhotoImage(file = "fotos/images.png")
         left= Label(self.root,image =self.left).place(x=70, y=-160,width=300,height=500)

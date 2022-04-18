@@ -8,7 +8,7 @@ import psycopg2
 from hashlib import sha256
 from collections import Counter
 import datetime
-
+ 
 class Register:
     def __init__(self,root):
         self.root = root

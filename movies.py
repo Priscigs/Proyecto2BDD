@@ -107,7 +107,7 @@ class Movies:
             width=100.0,
             height=150.0
         )
-
+ 
         self.movie6 = Image.open("fotos/encanto.jpeg")
         self.movie6 = self.movie6.resize((100,150), Image.ANTIALIAS)
         self.movie66 = ImageTk.PhotoImage(self.movie6)
