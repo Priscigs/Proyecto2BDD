@@ -54,7 +54,7 @@ CREATE TABLE
 			 sponsor VARCHAR(50),
 			 id_Anuncios VARCHAR(10),
 			 PRIMARY KEY (id_Anuncios),
-			 FOREIGN KEY (sponsor) REFERENCES sponsor(id_sponsor));
+			 FOREIGN KEY (sponsor) REFERENCES sponsor(id_sponsor));-- UPDATE ON CASCADE;
 
 CREATE TABLE 
 	usuarios(usuario VARCHAR (20),
@@ -62,7 +62,7 @@ CREATE TABLE
 			 email VARCHAR(30),
 	 		 tipo_suscripcion VARCHAR (15),
 	 		 activo_desde DATE,
-			  PRIMARY KEY(usuario));
+			  PRIMARY KEY(usuario));--
 
 CREATE TABLE 
 	perfiles(id_perfil VARCHAR (10),
@@ -97,6 +97,8 @@ CREATE TABLES generos(
 
 ALTER TABLE peliculas
 ADD FOREIGN KEY(director) REFERENCES director(nombre)
+
+CREATE TABLE recomendados(id_pelicula VARCHAR(10))
 --Relaciones--	 
 
 
@@ -125,7 +127,8 @@ CREATE TABLE
 	reproduccion(id_Anuncios VARCHAR (10),
 				 id_perfil VARCHAR(10),
 				 id_pelicula VARCHAR(10),
-				 fecha_reprod DATE,
+				 fecha_reprod DATETIME,
+				 hora_reprod TIME,
 				 FOREIGN KEY (id_Anuncios) REFERENCES anuncios(id_Anuncios),
 				 FOREIGN KEY (id_perfil) REFERENCES perfiles(id_perfil),
 				 FOREIGN KEY (id_pelicula) REFERENCES peliculas(id_pelicula),
@@ -152,6 +155,11 @@ CREATE TABLE pelicula_premio(id_premio VARCHAR(10),
 							PRIMARY KEY(id_premio, id_pelicula)
 							);
 
+CREATE TABLE generos_peliculas(
+	id_pelicula VARCHAR(10),
+	genero VARCHAR(20),
+	PRIMARY KEY(id_pelicula, genero)
+);
 
 -- INSERCIÓN DE DATOS A LAS TABLAS 
 				 
@@ -201,6 +209,10 @@ VALUES		('Q2ZLKBAJP0', 'Warner Bros')
 INSERT INTO reproduccion(id_anuncios, nombre_perfil, id_pelicula)
 VALUES		('Q6XY9R0LKB', 'Elean', 'Q2ZLKBAJP0')
 
+INSERT INTO peliculas VALUES(112"," 'w3r' ","'Interstellar' "," '2014-02-01' "," 'b' "," 'Christopher Nolan');
+
+
+
 -- ¿Que fan ha observado más minutos de películas de un actor dado?
 
 SELECT	
@@ -225,3 +237,25 @@ GROUP BY
 ORDER BY 
 	"Total observado" DESC
 LIMIT 1;
+
+
+--Queries de reporte
+
+--1
+
+--2
+
+--3
+
+--4
+SELECT tipo_suscripcion, COUNT(tipo_suscripcion)
+FROM usuarios
+WHERE tipo_suscripcion = 'Premium' AND activo_desde > NOW()::DATE - 180
+GROUP BY tipo_suscripcion;
+
+--5
+SELECT hora_reprod, COUNT(hora_reprod) as hora
+FROM reproduccion
+WHERE fecha_reprod = '2022-04-18'
+GROUP BY hora_reprod
+ORDER by hora desc limit 1;
