@@ -48,9 +48,21 @@ class Profiles:
                               font=('Times new roman', 12,'bold'),
                               fg="black").place(x=220,y=460,width=65, height=30)
 
+        btn_volver = Button(self.root, 
+                              text= 'Opciones de Usuario',
+                              command= self.superU,
+                              activebackground='green', 
+                              bg='#2A2A46', cursor="hand2",
+                              font=('Times new roman', 12,'bold'),
+                              fg="black").place(x=105,y=500,width=180, height=30)
+
     def register_ventana (self):
         self.root.destroy()
         import login
+
+    def superU (self):
+        self.root.destroy()
+        import Bprinci
     
     def register_data(self):
         self.datos = [(self.var_agregar.get(),

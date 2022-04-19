@@ -2,15 +2,11 @@ from tkinter import*
 from tkinter import messagebox
 from PIL import Image,ImageTk
 
-
-
 class Bprinci:
     def __init__(self,root):
         self.root = root
         self.root.title ("Bprinci")
         self.root.geometry('400x550+600+70')
-        
-        
         
         self.left=ImageTk.PhotoImage(file = "fotos/usuario.png")
         left= Label(self.root,image =self.left).place(x=110,y=30,width=200,height=200)
@@ -25,7 +21,6 @@ class Bprinci:
         self.root.destroy()
         import eliminar 
     
-
     def ventanaAgre (self):
         self.root.destroy()
         import agregar
@@ -37,11 +32,6 @@ class Bprinci:
     def ventadaPrinci (self):
         self.root.destroy()
         import Main
-    
-
-
-
-
 
 root=Tk()
 obj = Bprinci(root)
