@@ -6,6 +6,9 @@ import psycopg2
 from hashlib import sha256
 
 class Login:
+
+    global cuenta
+
     def __init__(self,root):
         self.root = root
         self.root.title ("Login")
@@ -16,11 +19,10 @@ class Login:
         titulo =Label(text ="Inicio de sesion:",font=("times new roman",20,"bold"),fg="Black").place(x=121,y=200)
 
         self.var_email = StringVar()
-        email =Label(text ="Email:",font=("times new roman",15,"bold"),fg="gray").place(x=100,y=260)
+        email =Label(text ="Usuario:",font=("times new roman",15,"bold"),fg="gray").place(x=100,y=260)
         txt_email =Entry(font=("times new roman",15),textvariable=self.var_email).place(x=100,y=290)
 
-        
-
+        cuenta = self.var_email.get()
         self.contraHash = StringVar()
 
         self.var_contra = StringVar(value='')
@@ -38,9 +40,6 @@ class Login:
         btn_register =Button(self.root, text= 'Login',command= self.verificar_data,activebackground='green', bg='#2A2A46', cursor="hand2",font=('Times new roman', 12,'bold'),fg="white").place(x=145,y=440,width=110, height=30)
         btn_register =Button(self.root, text= 'Super Usuario',command= self.bPrin,activebackground='green', bg='#2A2A46', cursor="hand2",font=('Times new roman', 12,'bold'),fg="white").place(x=145,y=470,width=110, height=30)
 
-        # cont = 1
-        # while cont <= 3:
-        #     if self.var_email
     def register_ventana (self):
         self.root.destroy()
         import register
@@ -59,9 +58,10 @@ class Login:
                 self.tuplas = tuple(datos)
                 self.connection = psycopg2.connect(dbname ="BDDP2", user = "postgres", password ="klipxtreme123_")
                 self.cursor = self.connection.cursor()
-                self.cursor.execute("SELECT* FROM usuarios WHERE email=%s and password =%s",self.tuplas)
+                self.cursor.execute("SELECT* FROM usuarios WHERE usuario=%s and password =%s",self.tuplas)
                 
                 row =self.cursor.fetchone()
+                
                 if row ==None:
                     messagebox.showerror("Error","Correo o contraseña incorrectos",parent=self.root)
                 else:
